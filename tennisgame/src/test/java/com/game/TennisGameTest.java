@@ -265,6 +265,41 @@ public class TennisGameTest {
 		});
 		assertEquals(GameConstant.PLAYER_ONE_NAME + GameConstant.WINS, tennisGame.getScoreBoard());
 	}
+	
+
+
+	@Test
+	public void testGameThree() {
+
+		assertEquals(GameConstant.SCORE_LOVE + GameConstant.ALL, tennisGame.getScoreBoard());
+		GameUtil.addScore(tennisGame.getFirstPlayer());
+		assertEquals(GameConstant.SCORE_FIFTEEN + GameConstant.UNDERSCORE + GameConstant.SCORE_LOVE,
+				tennisGame.getScoreBoard());
+		GameUtil.addScore(tennisGame.getSecondPlayer());
+		assertEquals(GameConstant.SCORE_FIFTEEN + GameConstant.ALL, tennisGame.getScoreBoard());
+		IntStream.rangeClosed(1, 1).forEach((Integer) -> {
+			GameUtil.addScore(tennisGame.getSecondPlayer());
+		});
+
+		assertEquals(GameConstant.SCORE_FIFTEEN + GameConstant.UNDERSCORE + GameConstant.SCORE_THIRTY,
+				tennisGame.getScoreBoard());
+		IntStream.rangeClosed(1, 1).forEach((Integer) -> {
+			GameUtil.addScore(tennisGame.getFirstPlayer());
+		});
+		assertEquals(GameConstant.SCORE_THIRTY + GameConstant.ALL, tennisGame.getScoreBoard());
+		GameUtil.addScore(tennisGame.getFirstPlayer());
+		assertEquals(GameConstant.ADVANTAGE + GameConstant.PLAYER_ONE_NAME, tennisGame.getScoreBoard());
+		GameUtil.addScore(tennisGame.getSecondPlayer());
+		assertEquals(GameConstant.DEUCE, tennisGame.getScoreBoard());
+		GameUtil.addScore(tennisGame.getSecondPlayer());
+		assertEquals(GameConstant.ADVANTAGE + GameConstant.PLAYER_TWO_NAME, tennisGame.getScoreBoard());
+		GameUtil.addScore(tennisGame.getFirstPlayer());
+		assertEquals(GameConstant.DEUCE, tennisGame.getScoreBoard());
+		GameUtil.addScore(tennisGame.getFirstPlayer());
+		assertEquals(GameConstant.ADVANTAGE + GameConstant.PLAYER_ONE_NAME, tennisGame.getScoreBoard());
+		GameUtil.addScore(tennisGame.getFirstPlayer());
+		assertEquals(GameConstant.PLAYER_ONE_NAME + GameConstant.WINS, tennisGame.getScoreBoard());
+	}
 
 	
 	// Simulating a game by adding score to players-End
