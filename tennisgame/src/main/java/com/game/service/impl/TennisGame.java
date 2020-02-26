@@ -51,6 +51,13 @@ public class TennisGame {
 			return GameConstant.SCORE_LOVE;
 		}
 	}
+	
+	/*
+	 * Method to add score for a player
+	 */
+	public void addScore(Player player) {
+		player.setPlayerScore(player.getPlayerScore() + 1);
+	}
 
 	/**
 	 * @return the firstPlayer

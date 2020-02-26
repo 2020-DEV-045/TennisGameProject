@@ -95,4 +95,14 @@ public class TennisGameTest {
 	}
 
 	//GetLeadingScorer Method check End
+
+	//Test AddScore Method check Start
+
+	@Test
+	public void testaddScore() {
+		tennisGame.addScore(tennisGame.getFirstPlayer());
+		assertEquals(1,tennisGame.getFirstPlayer().getPlayerScore());
+	}
+
+	//Test AddScore Method check End
 }
