@@ -18,7 +18,8 @@ public class TennisGame {
 	 */
 	public boolean isValidScore(int playerOneScore, int playerTwoScore) {
 		boolean validScore = true;
-		if(playerOneScore < 0 || playerTwoScore < 0) {
+		if(playerOneScore < 0 || playerTwoScore < 0 
+				|| (playerOneScore >= 3 && playerTwoScore >= 3 && Math.abs(playerOneScore - playerTwoScore) > 2)) {
 			validScore=false;
 		}
 		return validScore;
@@ -64,7 +65,7 @@ public class TennisGame {
 		return GameConstant.PLAYER_NOT_IN_ADVANTAGE;
 
 	}
-	
+
 	/*
 	 * Method to check player is in deuce
 	 */

@@ -222,4 +222,33 @@ public class TennisGameTest {
 	}
 
 	// Deuce Method Check End
+	
+	// Player should not win with 3 point more than opponent. Start
+	
+	@Test
+	public void testPlayerOneWinMarginGtThree() {
+		assertEquals(GameConstant.FALSE,tennisGame.isValidScore(8, 5));
+	}
+	
+	@Test
+	public void testPlayerTwoWinMarginGtThree() {
+		assertEquals(GameConstant.FALSE,tennisGame.isValidScore(4, 7));
+	}
+	
+	@Test
+	public void testPlayersScoreLtThree() {
+		assertEquals(GameConstant.TRUE,tennisGame.isValidScore(1, 2));
+	}
+	
+	@Test
+	public void testPlayersScoreEqThree() {
+		assertEquals(GameConstant.TRUE,tennisGame.isValidScore(3, 3));
+	}
+	
+	@Test
+	public void testPlayersWithValidScore() {
+		assertEquals(GameConstant.TRUE,tennisGame.isValidScore(8, 8));
+	} 
+	
+	// Player should not win with 3 point more than opponent.End
 }  
