@@ -112,14 +112,14 @@ public class TennisGameTest {
 	public void testPlayerOneAsWinner() {
 		tennisGame.getFirstPlayer().setPlayerScore(5);
 		tennisGame.getSecondPlayer().setPlayerScore(3);
-		assertEquals(GameConstant.PLAYER_ONE_NAME ,tennisGame.checkForWinner(tennisGame.getFirstPlayer(), tennisGame.getSecondPlayer()));
+		assertEquals(GameConstant.PLAYER_ONE_NAME+GameConstant.WINS ,tennisGame.checkForWinner(tennisGame.getFirstPlayer(), tennisGame.getSecondPlayer()));
 	}
 
 	@Test
 	public void testPlayerTwoAsWinner() {
 		tennisGame.getFirstPlayer().setPlayerScore(3);
 		tennisGame.getSecondPlayer().setPlayerScore(5);
-		assertEquals(GameConstant.PLAYER_TWO_NAME ,tennisGame.checkForWinner(tennisGame.getFirstPlayer(), tennisGame.getSecondPlayer()));
+		assertEquals(GameConstant.PLAYER_TWO_NAME+GameConstant.WINS ,tennisGame.checkForWinner(tennisGame.getFirstPlayer(), tennisGame.getSecondPlayer()));
 	}
 
 	@Test
