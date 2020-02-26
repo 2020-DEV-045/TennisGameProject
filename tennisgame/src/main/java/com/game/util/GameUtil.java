@@ -4,6 +4,19 @@ import com.game.exception.TennisGameException;
 import com.game.model.Player;
 
 public class GameUtil {
+	
+	
+	/*
+	 * Method to create object for player model
+	 */
+	public static Player setPlayerInfo(int playerScore, String playerName) {
+
+		Player player = new Player();
+		player.setPlayerName(playerName);
+		player.setPlayerScore(playerScore);
+		return player;
+	}
+
 
 	/*
 	 * Method to valid player score input parameter.

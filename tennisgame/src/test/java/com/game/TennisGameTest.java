@@ -255,8 +255,27 @@ public class TennisGameTest {
 
 	// Player should not win with 3 point more than opponent.End
 	
-	// Simulating a game by adding score to players-Start
+	// Test case to check the getGameResult method-start
+
+	@Test(expected = TennisGameException.class)
+	public void testAlphaInputParam() {
+		tennisGame.getGameResult("aa ss ", "asdas");
+	}
 	
+	@Test(expected = TennisGameException.class)
+	public void testNegativeCaseParam() {
+		tennisGame.getGameResult("-1", "-1");
+	}
+
+	@Test
+	public void testLoveAll() {
+		assertEquals(GameConstant.SCORE_LOVE + GameConstant.ALL, tennisGame.getGameResult("0", "0"));
+	}
+	
+	// Test case to check the getGameResult method-End
+
+	// Simulating a game by adding score to players-Start
+
 	@Test
 	public void testGameOne() {
 
@@ -265,8 +284,6 @@ public class TennisGameTest {
 		});
 		assertEquals(GameConstant.PLAYER_ONE_NAME + GameConstant.WINS, tennisGame.getScoreBoard());
 	}
-	
-
 
 	@Test
 	public void testGameThree() {
@@ -301,6 +318,5 @@ public class TennisGameTest {
 		assertEquals(GameConstant.PLAYER_ONE_NAME + GameConstant.WINS, tennisGame.getScoreBoard());
 	}
 
-	
 	// Simulating a game by adding score to players-End
 }  

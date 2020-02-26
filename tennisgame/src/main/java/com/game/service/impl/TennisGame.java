@@ -1,7 +1,11 @@
 
 package com.game.service.impl;
 
+import org.springframework.stereotype.Repository;
+
+import com.game.exception.TennisGameException;
 import com.game.model.Player;
+import com.game.service.Game;
 import com.game.util.GameConstant;
 import com.game.util.GameUtil;
 
@@ -9,11 +13,33 @@ import com.game.util.GameUtil;
  * @author 2020-DEV-045
  *
  */
-public class TennisGame {
+@Repository
+public class TennisGame implements Game {
 
 	private Player firstPlayer;
 	private Player secondPlayer;
 
+	public String getGameResult(String firstScore, String secondScore) {
+		String gameResult = "";
+
+		try {
+			int firstPlayerScore = Integer.parseInt(firstScore);
+			int secondPlayerScore = Integer.parseInt(secondScore);
+
+			if (GameUtil.isValidScore(firstPlayerScore, secondPlayerScore)) {
+				firstPlayer = GameUtil.setPlayerInfo(firstPlayerScore, GameConstant.PLAYER_ONE_NAME);
+				secondPlayer = GameUtil.setPlayerInfo(secondPlayerScore, GameConstant.PLAYER_TWO_NAME);
+
+				gameResult = getScoreBoard();
+			}
+		} catch (NumberFormatException numberFormatException) {
+			throw new TennisGameException(GameConstant.SCORE_EXCEPTION);
+		} catch (Exception exception) {
+			throw new TennisGameException(GameConstant.SCORE_EXCEPTION);
+		}
+
+		return gameResult;
+	}
 	
 	public String getScoreBoard() {
 
