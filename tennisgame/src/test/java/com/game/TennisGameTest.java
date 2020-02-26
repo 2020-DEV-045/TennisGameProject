@@ -8,6 +8,7 @@ import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.game.model.Player;
 import com.game.service.impl.TennisGame;
 import com.game.util.GameConstant;
 
@@ -23,6 +24,10 @@ public class TennisGameTest {
 	@Before
 	public void init() {
 		MockitoAnnotations.initMocks(this);
+		tennisGame.setFirstPlayer(new Player());
+		tennisGame.setSecondPlayer(new Player());
+		tennisGame.getFirstPlayer().setPlayerName(GameConstant.PLAYER_ONE_NAME);
+		tennisGame.getSecondPlayer().setPlayerName(GameConstant.PLAYER_TWO_NAME);
 	}
 
 	// Test IsValidScore method Start
@@ -72,4 +77,22 @@ public class TennisGameTest {
 	}
 
 	// Test getScore method End
+
+	//GetLeadingScorer Method check Start
+
+	@Test
+	public void testPlayerOneWithMaxScore() {
+		tennisGame.getFirstPlayer().setPlayerScore(5);
+		tennisGame.getSecondPlayer().setPlayerScore(4);
+		assertEquals(GameConstant.PLAYER_ONE_NAME,tennisGame.getLeadingScorer(tennisGame.getFirstPlayer(), tennisGame.getSecondPlayer()));
+	}
+
+	@Test
+	public void testPlayerTwoWithMaxScore() {
+		tennisGame.getFirstPlayer().setPlayerScore(1);
+		tennisGame.getSecondPlayer().setPlayerScore(2);
+		assertEquals(GameConstant.PLAYER_TWO_NAME,tennisGame.getLeadingScorer(tennisGame.getFirstPlayer(), tennisGame.getSecondPlayer()));
+	}
+
+	//GetLeadingScorer Method check End
 }

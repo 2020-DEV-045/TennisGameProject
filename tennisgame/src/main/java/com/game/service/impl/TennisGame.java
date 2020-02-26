@@ -1,6 +1,7 @@
 
 package com.game.service.impl;
 
+import com.game.model.Player;
 import com.game.util.GameConstant;
 
 /**
@@ -8,6 +9,9 @@ import com.game.util.GameConstant;
  *
  */
 public class TennisGame {
+	
+	private Player firstPlayer;
+	private Player secondPlayer;
 	
 	/*
 	 * Method to valid player score input parameter.
@@ -18,6 +22,17 @@ public class TennisGame {
 			validScore=false;
 		}
 		return validScore;
+	}
+	
+	/*
+	 * Method to check player with highest score
+	 */
+	public String getLeadingScorer(Player firstPlayer, Player secondPlayer) {
+		if (firstPlayer.getPlayerScore() > secondPlayer.getPlayerScore()) {
+			return firstPlayer.getPlayerName();
+		} else {
+			return secondPlayer.getPlayerName();
+		}
 	}
 	
 	/*
@@ -35,6 +50,34 @@ public class TennisGame {
 		default:
 			return GameConstant.SCORE_LOVE;
 		}
+	}
+
+	/**
+	 * @return the firstPlayer
+	 */
+	public Player getFirstPlayer() {
+		return firstPlayer;
+	}
+
+	/**
+	 * @param firstPlayer the firstPlayer to set
+	 */
+	public void setFirstPlayer(Player firstPlayer) {
+		this.firstPlayer = firstPlayer;
+	}
+
+	/**
+	 * @return the secondPlayer
+	 */
+	public Player getSecondPlayer() {
+		return secondPlayer;
+	}
+
+	/**
+	 * @param secondPlayer the secondPlayer to set
+	 */
+	public void setSecondPlayer(Player secondPlayer) {
+		this.secondPlayer = secondPlayer;
 	}
 	
 }
