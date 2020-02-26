@@ -2,15 +2,19 @@ package com.game;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.stream.IntStream;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.game.exception.TennisGameException;
 import com.game.model.Player;
 import com.game.service.impl.TennisGame;
 import com.game.util.GameConstant;
+import com.game.util.GameUtil;
 
 @SpringBootTest
 public class TennisGameTest {
@@ -32,24 +36,24 @@ public class TennisGameTest {
 
 	// Test IsValidScore method Start
 
-	@Test
+	@Test(expected = TennisGameException.class)
 	public void testPlayerOneWithNegativeScore() {
-		assertEquals(GameConstant.FALSE,tennisGame.isValidScore(-1, 1));
+		GameUtil.isValidScore(-1, 1);
 	}
 
-	@Test
+	@Test(expected = TennisGameException.class)
 	public void testPlayerTwoWithNegativeScore() {
-		assertEquals(GameConstant.FALSE,tennisGame.isValidScore(1, -1));
+		GameUtil.isValidScore(1, -1);
 	}
 
-	@Test
+	@Test(expected = TennisGameException.class)
 	public void testPlayersWithNegativeScore() {
-		assertEquals(GameConstant.FALSE,tennisGame.isValidScore(-1, -1));
+		GameUtil.isValidScore(-1, -1);
 	}
 
 	@Test
 	public void testPlayersWithPositiveScore() {
-		assertEquals(GameConstant.TRUE,tennisGame.isValidScore(1, 1));
+		assertEquals(GameConstant.TRUE,GameUtil.isValidScore(1, 1));
 	}
 
 	// Test IsValidScore method End
@@ -58,22 +62,22 @@ public class TennisGameTest {
 
 	@Test
 	public void testScoreLove() {
-		assertEquals(GameConstant.SCORE_LOVE,tennisGame.getScore(0));
+		assertEquals(GameConstant.SCORE_LOVE,GameUtil.getScore(0));
 	}
 
 	@Test
 	public void testScoreFifteen() {
-		assertEquals(GameConstant.SCORE_FIFTEEN,tennisGame.getScore(1));
+		assertEquals(GameConstant.SCORE_FIFTEEN,GameUtil.getScore(1));
 	}
 
 	@Test
 	public void testScoreThirty() {
-		assertEquals(GameConstant.SCORE_THIRTY,tennisGame.getScore(2));
+		assertEquals(GameConstant.SCORE_THIRTY,GameUtil.getScore(2));
 	}
 
 	@Test
 	public void testScoreForty() {
-		assertEquals(GameConstant.SCORE_FORTY,tennisGame.getScore(3));
+		assertEquals(GameConstant.SCORE_FORTY,GameUtil.getScore(3));
 	}
 
 	// Test getScore method End
@@ -84,14 +88,14 @@ public class TennisGameTest {
 	public void testPlayerOneWithMaxScore() {
 		tennisGame.getFirstPlayer().setPlayerScore(5);
 		tennisGame.getSecondPlayer().setPlayerScore(4);
-		assertEquals(GameConstant.PLAYER_ONE_NAME,tennisGame.getLeadingScorer(tennisGame.getFirstPlayer(), tennisGame.getSecondPlayer()));
+		assertEquals(GameConstant.PLAYER_ONE_NAME,GameUtil.getLeadingScorer(tennisGame.getFirstPlayer(), tennisGame.getSecondPlayer()));
 	}
 
 	@Test
 	public void testPlayerTwoWithMaxScore() {
 		tennisGame.getFirstPlayer().setPlayerScore(1);
 		tennisGame.getSecondPlayer().setPlayerScore(2);
-		assertEquals(GameConstant.PLAYER_TWO_NAME,tennisGame.getLeadingScorer(tennisGame.getFirstPlayer(), tennisGame.getSecondPlayer()));
+		assertEquals(GameConstant.PLAYER_TWO_NAME,GameUtil.getLeadingScorer(tennisGame.getFirstPlayer(), tennisGame.getSecondPlayer()));
 	}
 
 	//GetLeadingScorer Method check End
@@ -100,7 +104,7 @@ public class TennisGameTest {
 
 	@Test
 	public void testaddScore() {
-		tennisGame.addScore(tennisGame.getFirstPlayer());
+		GameUtil.addScore(tennisGame.getFirstPlayer());
 		assertEquals(1,tennisGame.getFirstPlayer().getPlayerScore());
 	}
 
@@ -112,44 +116,43 @@ public class TennisGameTest {
 	public void testPlayerOneAsWinner() {
 		tennisGame.getFirstPlayer().setPlayerScore(5);
 		tennisGame.getSecondPlayer().setPlayerScore(3);
-		assertEquals(GameConstant.PLAYER_ONE_NAME+GameConstant.WINS ,tennisGame.checkForWinner(tennisGame.getFirstPlayer(), tennisGame.getSecondPlayer()));
+		assertEquals(true,GameUtil.checkForWinner(tennisGame.getFirstPlayer(), tennisGame.getSecondPlayer()));
 	}
 
 	@Test
 	public void testPlayerTwoAsWinner() {
 		tennisGame.getFirstPlayer().setPlayerScore(3);
 		tennisGame.getSecondPlayer().setPlayerScore(5);
-		assertEquals(GameConstant.PLAYER_TWO_NAME+GameConstant.WINS ,tennisGame.checkForWinner(tennisGame.getFirstPlayer(), tennisGame.getSecondPlayer()));
+		assertEquals(true,GameUtil.checkForWinner(tennisGame.getFirstPlayer(), tennisGame.getSecondPlayer()));
 	}
 
 	@Test
 	public void testPlayerOneWithleadingScoreOne() {
 		tennisGame.getFirstPlayer().setPlayerScore(5);
 		tennisGame.getSecondPlayer().setPlayerScore(4);
-		assertEquals(GameConstant.NO_PLAYER_WON,tennisGame.checkForWinner(tennisGame.getFirstPlayer(), tennisGame.getSecondPlayer()));
+		assertEquals(false,GameUtil.checkForWinner(tennisGame.getFirstPlayer(), tennisGame.getSecondPlayer()));
 	}
 
 	@Test
 	public void testPlayerTwoWithleadingScoreOne() {
 		tennisGame.getFirstPlayer().setPlayerScore(4);
 		tennisGame.getSecondPlayer().setPlayerScore(5);
-		assertEquals(GameConstant.NO_PLAYER_WON,tennisGame.checkForWinner(tennisGame.getFirstPlayer(), tennisGame.getSecondPlayer()));
+		assertEquals(false,GameUtil.checkForWinner(tennisGame.getFirstPlayer(), tennisGame.getSecondPlayer()));
 	}
 
 	@Test
 	public void testPlayerOneNotWithMinWinningScore() {
 		tennisGame.getFirstPlayer().setPlayerScore(2);
 		tennisGame.getSecondPlayer().setPlayerScore(1);
-		assertEquals(GameConstant.NO_PLAYER_WON,tennisGame.checkForWinner(tennisGame.getFirstPlayer(), tennisGame.getSecondPlayer()));
+		assertEquals(false,GameUtil.checkForWinner(tennisGame.getFirstPlayer(), tennisGame.getSecondPlayer()));
 	}
 
 	@Test
 	public void testPlayerTwoNotWithMinWinningScore() {
 		tennisGame.getFirstPlayer().setPlayerScore(0);
 		tennisGame.getSecondPlayer().setPlayerScore(2);
-		assertEquals(GameConstant.NO_PLAYER_WON,tennisGame.checkForWinner(tennisGame.getFirstPlayer(), tennisGame.getSecondPlayer()));
+		assertEquals(false,GameUtil.checkForWinner(tennisGame.getFirstPlayer(), tennisGame.getSecondPlayer()));
 	}
-
 	//CheckForWinner Method check End
 
 	//CheckForAdvantage Method check Start
@@ -158,42 +161,42 @@ public class TennisGameTest {
 	public void testPlayerOneWithAdvantage() {
 		tennisGame.getFirstPlayer().setPlayerScore(5);
 		tennisGame.getSecondPlayer().setPlayerScore(4);
-		assertEquals(tennisGame.getFirstPlayer().getPlayerName()+GameConstant.ADVANTAGE ,tennisGame.checkForAdvantage(tennisGame.getFirstPlayer(), tennisGame.getSecondPlayer()));
+		assertEquals(true,GameUtil.checkForAdvantage(tennisGame.getFirstPlayer(), tennisGame.getSecondPlayer()));
 	}
 
 	@Test
 	public void testPlayerTwoWithAdvantage() {
 		tennisGame.getFirstPlayer().setPlayerScore(4);
 		tennisGame.getSecondPlayer().setPlayerScore(5);
-		assertEquals(tennisGame.getSecondPlayer().getPlayerName()+GameConstant.ADVANTAGE,tennisGame.checkForAdvantage(tennisGame.getFirstPlayer(), tennisGame.getSecondPlayer()));
+		assertEquals(true,GameUtil.checkForAdvantage(tennisGame.getFirstPlayer(), tennisGame.getSecondPlayer()));
 	}
 
 	@Test
 	public void testPlayerOneWithOutAdvantage() {
 		tennisGame.getFirstPlayer().setPlayerScore(5);
 		tennisGame.getSecondPlayer().setPlayerScore(5);
-		assertEquals(GameConstant.PLAYER_NOT_IN_ADVANTAGE,tennisGame.checkForAdvantage(tennisGame.getFirstPlayer(), tennisGame.getSecondPlayer()));
+		assertEquals(false,GameUtil.checkForAdvantage(tennisGame.getFirstPlayer(), tennisGame.getSecondPlayer()));
 	}
 
 	@Test
 	public void testPlayerTwoWithOutAdvantage() {
 		tennisGame.getFirstPlayer().setPlayerScore(4);
 		tennisGame.getSecondPlayer().setPlayerScore(6);
-		assertEquals(GameConstant.PLAYER_NOT_IN_ADVANTAGE,tennisGame.checkForAdvantage(tennisGame.getFirstPlayer(), tennisGame.getSecondPlayer()));
+		assertEquals(false,GameUtil.checkForAdvantage(tennisGame.getFirstPlayer(), tennisGame.getSecondPlayer()));
 	}
 
 	@Test
 	public void testPlayerOneNotWithMinAdvScore() {
 		tennisGame.getFirstPlayer().setPlayerScore(2);
 		tennisGame.getSecondPlayer().setPlayerScore(1);
-		assertEquals(GameConstant.PLAYER_NOT_IN_ADVANTAGE,tennisGame.checkForAdvantage(tennisGame.getFirstPlayer(), tennisGame.getSecondPlayer()));
+		assertEquals(false,GameUtil.checkForAdvantage(tennisGame.getFirstPlayer(), tennisGame.getSecondPlayer()));
 	}
 
 	@Test
 	public void testPlayerTwoNotWithMinAdvScore() {
 		tennisGame.getFirstPlayer().setPlayerScore(0);
 		tennisGame.getSecondPlayer().setPlayerScore(1);
-		assertEquals(GameConstant.PLAYER_NOT_IN_ADVANTAGE,tennisGame.checkForAdvantage(tennisGame.getFirstPlayer(), tennisGame.getSecondPlayer()));
+		assertEquals(false,GameUtil.checkForAdvantage(tennisGame.getFirstPlayer(), tennisGame.getSecondPlayer()));
 	}
 
 	//CheckForAdvantage Method check End
@@ -204,51 +207,65 @@ public class TennisGameTest {
 	public void testcheckDeuce() {
 		tennisGame.getFirstPlayer().setPlayerScore(3);
 		tennisGame.getSecondPlayer().setPlayerScore(3);
-		assertEquals(true,tennisGame.checkForDeuce(tennisGame.getFirstPlayer(), tennisGame.getSecondPlayer()));
+		assertEquals(true,GameUtil.checkForDeuce(tennisGame.getFirstPlayer(), tennisGame.getSecondPlayer()));
 	}
 
 	@Test
 	public void testDeuceWithPlayerOneScoreLtThree() {
 		tennisGame.getFirstPlayer().setPlayerScore(2);
 		tennisGame.getSecondPlayer().setPlayerScore(3);
-		assertEquals(false,tennisGame.checkForDeuce(tennisGame.getFirstPlayer(), tennisGame.getSecondPlayer()));
+		assertEquals(false,GameUtil.checkForDeuce(tennisGame.getFirstPlayer(), tennisGame.getSecondPlayer()));
 	}
 
 	@Test
 	public void testDeuceWithPlayersSCoreNotEqual() {
 		tennisGame.getFirstPlayer().setPlayerScore(4);
 		tennisGame.getSecondPlayer().setPlayerScore(5);
-		assertEquals(false,tennisGame.checkForDeuce(tennisGame.getFirstPlayer(), tennisGame.getSecondPlayer()));
+		assertEquals(false,GameUtil.checkForDeuce(tennisGame.getFirstPlayer(), tennisGame.getSecondPlayer()));
 	}
 
 	// Deuce Method Check End
-	
+
 	// Player should not win with 3 point more than opponent. Start
-	
-	@Test
+
+	@Test(expected = TennisGameException.class)
 	public void testPlayerOneWinMarginGtThree() {
-		assertEquals(GameConstant.FALSE,tennisGame.isValidScore(8, 5));
+		GameUtil.isValidScore(8, 5);
 	}
-	
-	@Test
+
+	@Test(expected = TennisGameException.class)
 	public void testPlayerTwoWinMarginGtThree() {
-		assertEquals(GameConstant.FALSE,tennisGame.isValidScore(4, 7));
+		GameUtil.isValidScore(4, 7);
 	}
-	
+
 	@Test
 	public void testPlayersScoreLtThree() {
-		assertEquals(GameConstant.TRUE,tennisGame.isValidScore(1, 2));
+		assertEquals(GameConstant.TRUE,GameUtil.isValidScore(1, 2));
 	}
-	
+
 	@Test
 	public void testPlayersScoreEqThree() {
-		assertEquals(GameConstant.TRUE,tennisGame.isValidScore(3, 3));
+		assertEquals(GameConstant.TRUE,GameUtil.isValidScore(3, 3));
 	}
-	
+
 	@Test
 	public void testPlayersWithValidScore() {
-		assertEquals(GameConstant.TRUE,tennisGame.isValidScore(8, 8));
+		assertEquals(GameConstant.TRUE,GameUtil.isValidScore(8, 8));
 	} 
-	
+
 	// Player should not win with 3 point more than opponent.End
+	
+	// Simulating a game by adding score to players-Start
+	
+	@Test
+	public void testGameOne() {
+
+		IntStream.rangeClosed(1, 3).forEach((Integer) -> {
+			GameUtil.addScore(tennisGame.getFirstPlayer());
+		});
+		assertEquals(GameConstant.PLAYER_ONE_NAME + GameConstant.WINS, tennisGame.getScoreBoard());
+	}
+
+	
+	// Simulating a game by adding score to players-End
 }  

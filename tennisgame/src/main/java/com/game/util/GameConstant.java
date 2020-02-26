@@ -20,5 +20,10 @@ public interface GameConstant {
 	String WINS=" wins";
 	String PLAYER_NOT_IN_ADVANTAGE="Score not in advantage";
 	String ADVANTAGE=" advantage";
+	String SCORE_EXCEPTION="Illegal score entered ";
+
+	String ALL=" all";
+	String DEUCE="Deuce";
+	String UNDERSCORE="-";
 
 }
