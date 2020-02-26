@@ -18,5 +18,7 @@ public interface GameConstant {
 	String PLAYER_TWO_NAME="PlayerTwo";
 	String NO_PLAYER_WON="Game still on";
 	String WINS=" wins";
+	String PLAYER_NOT_IN_ADVANTAGE="Score not in advantage";
+	String ADVANTAGE=" advantage";
 
 }

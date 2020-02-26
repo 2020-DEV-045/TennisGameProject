@@ -151,4 +151,50 @@ public class TennisGameTest {
 	}
 
 	//CheckForWinner Method check End
+
+	//CheckForAdvantage Method check Start
+
+	@Test
+	public void testPlayerOneWithAdvantage() {
+		tennisGame.getFirstPlayer().setPlayerScore(5);
+		tennisGame.getSecondPlayer().setPlayerScore(4);
+		assertEquals(tennisGame.getFirstPlayer().getPlayerName()+GameConstant.ADVANTAGE ,tennisGame.checkForAdvantage(tennisGame.getFirstPlayer(), tennisGame.getSecondPlayer()));
+	}
+
+	@Test
+	public void testPlayerTwoWithAdvantage() {
+		tennisGame.getFirstPlayer().setPlayerScore(4);
+		tennisGame.getSecondPlayer().setPlayerScore(5);
+		assertEquals(tennisGame.getSecondPlayer().getPlayerName()+GameConstant.ADVANTAGE,tennisGame.checkForAdvantage(tennisGame.getFirstPlayer(), tennisGame.getSecondPlayer()));
+	}
+
+	@Test
+	public void testPlayerOneWithOutAdvantage() {
+		tennisGame.getFirstPlayer().setPlayerScore(5);
+		tennisGame.getSecondPlayer().setPlayerScore(5);
+		assertEquals(GameConstant.PLAYER_NOT_IN_ADVANTAGE,tennisGame.checkForAdvantage(tennisGame.getFirstPlayer(), tennisGame.getSecondPlayer()));
+	}
+
+	@Test
+	public void testPlayerTwoWithOutAdvantage() {
+		tennisGame.getFirstPlayer().setPlayerScore(4);
+		tennisGame.getSecondPlayer().setPlayerScore(6);
+		assertEquals(GameConstant.PLAYER_NOT_IN_ADVANTAGE,tennisGame.checkForAdvantage(tennisGame.getFirstPlayer(), tennisGame.getSecondPlayer()));
+	}
+
+	@Test
+	public void testPlayerOneNotWithMinAdvScore() {
+		tennisGame.getFirstPlayer().setPlayerScore(2);
+		tennisGame.getSecondPlayer().setPlayerScore(1);
+		assertEquals(GameConstant.PLAYER_NOT_IN_ADVANTAGE,tennisGame.checkForAdvantage(tennisGame.getFirstPlayer(), tennisGame.getSecondPlayer()));
+	}
+
+	@Test
+	public void testPlayerTwoNotWithMinAdvScore() {
+		tennisGame.getFirstPlayer().setPlayerScore(0);
+		tennisGame.getSecondPlayer().setPlayerScore(1);
+		assertEquals(GameConstant.PLAYER_NOT_IN_ADVANTAGE,tennisGame.checkForAdvantage(tennisGame.getFirstPlayer(), tennisGame.getSecondPlayer()));
+	}
+
+	//CheckForAdvantage Method check End
 }  

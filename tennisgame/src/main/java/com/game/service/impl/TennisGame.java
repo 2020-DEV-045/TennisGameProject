@@ -9,10 +9,10 @@ import com.game.util.GameConstant;
  *
  */
 public class TennisGame {
-	
+
 	private Player firstPlayer;
 	private Player secondPlayer;
-	
+
 	/*
 	 * Method to valid player score input parameter.
 	 */
@@ -23,7 +23,7 @@ public class TennisGame {
 		}
 		return validScore;
 	}
-	
+
 	/*
 	 * Method to check player with highest score
 	 */
@@ -34,24 +34,41 @@ public class TennisGame {
 			return secondPlayer.getPlayerName();
 		}
 	}
-	
+
 	/*
 	 * Method to check which player is winner
 	 */
 	public String checkForWinner(Player firstPlayer, Player secondPlayer) {
 		if ((firstPlayer.getPlayerScore() >= 3 && firstPlayer.getPlayerScore() >= secondPlayer.getPlayerScore() + 2)) {
 			return firstPlayer.getPlayerName()+GameConstant.WINS;
-			
+
 		} else if((secondPlayer.getPlayerScore() >= 3 && secondPlayer.getPlayerScore() >= firstPlayer.getPlayerScore() + 2)) {
 			return secondPlayer.getPlayerName()+GameConstant.WINS;
 		}
 		return GameConstant.NO_PLAYER_WON;
 	}
-	
+
+	/*
+	 * Method to check whether player is advantage.
+	 */
+
+	public String checkForAdvantage(Player firstPlayer, Player secondPlayer) {
+
+		if ((firstPlayer.getPlayerScore() >= 3 && firstPlayer.getPlayerScore() == secondPlayer.getPlayerScore() + 1)) {
+			return firstPlayer.getPlayerName()+GameConstant.ADVANTAGE;
+		}
+		if((secondPlayer.getPlayerScore() >= 3 && secondPlayer.getPlayerScore() == firstPlayer.getPlayerScore() + 1)) {
+			return secondPlayer.getPlayerName()+GameConstant.ADVANTAGE;
+		}
+
+		return GameConstant.PLAYER_NOT_IN_ADVANTAGE;
+
+	}
+
 	/*
 	 *  Method to return score in words
 	 */
-	
+
 	public String getScore(int score) {
 		switch (score) {
 		case 3:
@@ -64,7 +81,7 @@ public class TennisGame {
 			return GameConstant.SCORE_LOVE;
 		}
 	}
-	
+
 	/*
 	 * Method to add score for a player
 	 */
@@ -99,5 +116,5 @@ public class TennisGame {
 	public void setSecondPlayer(Player secondPlayer) {
 		this.secondPlayer = secondPlayer;
 	}
-	
+
 }
