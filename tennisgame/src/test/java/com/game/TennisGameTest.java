@@ -197,4 +197,29 @@ public class TennisGameTest {
 	}
 
 	//CheckForAdvantage Method check End
+
+	// Deuce Method Check Start
+
+	@Test
+	public void testcheckDeuce() {
+		tennisGame.getFirstPlayer().setPlayerScore(3);
+		tennisGame.getSecondPlayer().setPlayerScore(3);
+		assertEquals(true,tennisGame.checkForDeuce(tennisGame.getFirstPlayer(), tennisGame.getSecondPlayer()));
+	}
+
+	@Test
+	public void testDeuceWithPlayerOneScoreLtThree() {
+		tennisGame.getFirstPlayer().setPlayerScore(2);
+		tennisGame.getSecondPlayer().setPlayerScore(3);
+		assertEquals(false,tennisGame.checkForDeuce(tennisGame.getFirstPlayer(), tennisGame.getSecondPlayer()));
+	}
+
+	@Test
+	public void testDeuceWithPlayersSCoreNotEqual() {
+		tennisGame.getFirstPlayer().setPlayerScore(4);
+		tennisGame.getSecondPlayer().setPlayerScore(5);
+		assertEquals(false,tennisGame.checkForDeuce(tennisGame.getFirstPlayer(), tennisGame.getSecondPlayer()));
+	}
+
+	// Deuce Method Check End
 }  

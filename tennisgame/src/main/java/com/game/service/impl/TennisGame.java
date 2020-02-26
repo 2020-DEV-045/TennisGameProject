@@ -64,6 +64,15 @@ public class TennisGame {
 		return GameConstant.PLAYER_NOT_IN_ADVANTAGE;
 
 	}
+	
+	/*
+	 * Method to check player is in deuce
+	 */
+	public boolean checkForDeuce(Player firstPlayer, Player secondPlayer) {
+		boolean deuce = firstPlayer.getPlayerScore() >= 3
+				&& secondPlayer.getPlayerScore() == firstPlayer.getPlayerScore();
+		return deuce;
+	}
 
 	/*
 	 *  Method to return score in words
