@@ -16,5 +16,6 @@ public interface GameConstant {
 	String SCORE_FORTY="Forty";
 	String PLAYER_ONE_NAME="PlayerOne";
 	String PLAYER_TWO_NAME="PlayerTwo";
+	String NO_PLAYER_WON="Game still on";
 
 }

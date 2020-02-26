@@ -105,4 +105,50 @@ public class TennisGameTest {
 	}
 
 	//Test AddScore Method check End
-}
+
+	//CheckForWinner Method check Start
+
+	@Test
+	public void testPlayerOneAsWinner() {
+		tennisGame.getFirstPlayer().setPlayerScore(5);
+		tennisGame.getSecondPlayer().setPlayerScore(3);
+		assertEquals(GameConstant.PLAYER_ONE_NAME ,tennisGame.checkForWinner(tennisGame.getFirstPlayer(), tennisGame.getSecondPlayer()));
+	}
+
+	@Test
+	public void testPlayerTwoAsWinner() {
+		tennisGame.getFirstPlayer().setPlayerScore(3);
+		tennisGame.getSecondPlayer().setPlayerScore(5);
+		assertEquals(GameConstant.PLAYER_TWO_NAME ,tennisGame.checkForWinner(tennisGame.getFirstPlayer(), tennisGame.getSecondPlayer()));
+	}
+
+	@Test
+	public void testPlayerOneWithleadingScoreOne() {
+		tennisGame.getFirstPlayer().setPlayerScore(5);
+		tennisGame.getSecondPlayer().setPlayerScore(4);
+		assertEquals(GameConstant.NO_PLAYER_WON,tennisGame.checkForWinner(tennisGame.getFirstPlayer(), tennisGame.getSecondPlayer()));
+	}
+
+	@Test
+	public void testPlayerTwoWithleadingScoreOne() {
+		tennisGame.getFirstPlayer().setPlayerScore(4);
+		tennisGame.getSecondPlayer().setPlayerScore(5);
+		assertEquals(GameConstant.NO_PLAYER_WON,tennisGame.checkForWinner(tennisGame.getFirstPlayer(), tennisGame.getSecondPlayer()));
+	}
+
+	@Test
+	public void testPlayerOneNotWithMinWinningScore() {
+		tennisGame.getFirstPlayer().setPlayerScore(2);
+		tennisGame.getSecondPlayer().setPlayerScore(1);
+		assertEquals(GameConstant.NO_PLAYER_WON,tennisGame.checkForWinner(tennisGame.getFirstPlayer(), tennisGame.getSecondPlayer()));
+	}
+
+	@Test
+	public void testPlayerTwoNotWithMinWinningScore() {
+		tennisGame.getFirstPlayer().setPlayerScore(0);
+		tennisGame.getSecondPlayer().setPlayerScore(2);
+		assertEquals(GameConstant.NO_PLAYER_WON,tennisGame.checkForWinner(tennisGame.getFirstPlayer(), tennisGame.getSecondPlayer()));
+	}
+
+	//CheckForWinner Method check End
+}  

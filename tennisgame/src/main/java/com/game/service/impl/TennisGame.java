@@ -35,6 +35,16 @@ public class TennisGame {
 		}
 	}
 	
+	public String checkForWinner(Player firstPlayer, Player secondPlayer) {
+		if ((firstPlayer.getPlayerScore() >= 3 && firstPlayer.getPlayerScore() >= secondPlayer.getPlayerScore() + 2)) {
+			return firstPlayer.getPlayerName();
+			
+		} else if((secondPlayer.getPlayerScore() >= 3 && secondPlayer.getPlayerScore() >= firstPlayer.getPlayerScore() + 2)) {
+			return secondPlayer.getPlayerName();
+		}
+		return GameConstant.NO_PLAYER_WON;
+	}
+	
 	/*
 	 *  Method to return score in words
 	 */
